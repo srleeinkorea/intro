@@ -1,0 +1,1632 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>이사라 | Healthcare AI PM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #f8f9fb;
+        --bg2: #f1f4f9;
+        --white: #ffffff;
+        --ink: #0f1419;
+        --ink2: #334155;
+        --muted: #64748b;
+        --accent: #0f5fd8;
+        --accent-light: #eff6ff;
+        --line: #dce4ed;
+        --card: #ffffff;
+        --tag-bg: #ecf0f8;
+        --shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.03);
+      }
+      body {
+        background: var(--bg);
+        color: var(--ink2);
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        line-height: 1.75;
+        -webkit-font-smoothing: antialiased;
+        min-height: 100vh;
+      }
+      /* ─── LAYOUT ─── */
+      .wrap {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      /* ─── HEADER ─── */
+      header {
+        background: var(--white);
+        border-bottom: 1px solid var(--line);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+      }
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        height: 56px;
+        max-width: 1180px;
+        margin: 0 auto;
+      }
+      .logo {
+        font-family: "DM Serif Display", serif;
+        font-size: 18px;
+        color: var(--ink);
+        letter-spacing: 0.01em;
+      }
+      .logo span {
+        color: var(--accent);
+        font-style: italic;
+      }
+      nav {
+        display: flex;
+        gap: 2px;
+      }
+      .nav-btn {
+        background: none;
+        border: none;
+        font-family: "DM Sans", sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--muted);
+        padding: 6px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.18s;
+        letter-spacing: 0.02em;
+      }
+      .nav-btn:hover {
+        color: var(--ink);
+      }
+      .nav-btn.active {
+        color: var(--accent);
+        background: var(--accent-light);
+      }
+      /* ─── HERO ─── */
+      .hero {
+        background: var(--white);
+        border-bottom: 1px solid var(--line);
+        animation: fadeUp 0.6s ease both;
+        overflow: hidden;
+        position: relative;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 60% 80% at 100% 0%,
+            rgba(15, 95, 216, 0.03) 0%,
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 40% 60% at 0% 100%,
+            rgba(15, 95, 216, 0.02) 0%,
+            transparent 60%
+          );
+        pointer-events: none;
+      }
+      .hero-top {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 56px 24px 44px;
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 48px;
+        align-items: start;
+        position: relative;
+      }
+      .hero-eyebrow {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .hero-eyebrow::before {
+        content: "";
+        width: 20px;
+        height: 1.5px;
+        background: var(--accent);
+        border-radius: 2px;
+      }
+      .hero-name {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(48px, 6.5vw, 76px);
+        color: var(--ink);
+        line-height: 0.95;
+        margin-bottom: 4px;
+        letter-spacing: -0.02em;
+      }
+      .hero-name-en {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(18px, 2.5vw, 26px);
+        font-style: italic;
+        color: var(--muted);
+        font-weight: 400;
+        margin-bottom: 24px;
+      }
+      .hero-desc {
+        font-size: 14.5px;
+        color: var(--ink2);
+        font-weight: 300;
+        line-height: 1.75;
+        max-width: 540px;
+      }
+      /* Journey pills */
+      .hero-journey {
+        margin-top: 28px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        align-items: center;
+      }
+      .journey-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-right: 4px;
+      }
+      .journey-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 11px;
+        border-radius: 20px;
+        font-size: 11.5px;
+        font-weight: 500;
+        border: 1px solid var(--line);
+        background: var(--bg);
+        color: var(--ink2);
+        white-space: nowrap;
+      }
+      .journey-pill.current {
+        background: var(--accent-light);
+        border-color: rgba(15, 95, 216, 0.2);
+        color: var(--accent);
+      }
+      .journey-arrow {
+        font-size: 10px;
+        color: var(--line);
+      }
+      /* Right panel */
+      .hero-right {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding-top: 6px;
+      }
+      .hero-stat-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .m-cell {
+        background: var(--white);
+        padding: 18px 12px;
+        text-align: center;
+        transition: background 0.15s;
+      }
+      .m-cell:hover {
+        background: var(--bg);
+      }
+      .m-num {
+        font-family: "DM Serif Display", serif;
+        font-size: 36px;
+        color: var(--ink);
+        line-height: 1;
+        display: block;
+      }
+      .m-label {
+        font-size: 9.5px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-top: 4px;
+        line-height: 1.4;
+      }
+      .hero-contact {
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 16px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 12.5px;
+        color: var(--ink2);
+      }
+      .contact-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 7px;
+        background: var(--white);
+        border: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        flex-shrink: 0;
+      }
+      .contact-item a {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      /* Key domains strip */
+      .hero-domains {
+        border-top: 1px solid var(--line);
+        background: var(--bg);
+      }
+      .hero-domains-inner {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .domain-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        flex-shrink: 0;
+        margin-right: 4px;
+      }
+      .domain-tag {
+        font-size: 11.5px;
+        color: var(--ink2);
+        padding: 3px 10px;
+        border-radius: 4px;
+        background: var(--white);
+        border: 1px solid var(--line);
+        font-weight: 400;
+      }
+      .domain-dot {
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: var(--line);
+        flex-shrink: 0;
+      }
+      /* ─── PANELS ─── */
+      .panel {
+        display: none;
+      }
+      .panel.active {
+        display: block;
+        animation: fadeUp 0.4s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      /* ─── ABOUT PANEL ─── */
+      .about-layout {
+        padding: 48px 24px;
+        max-width: 1180px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 48px;
+      }
+      /* Section labels */
+      .section-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .section-label::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--line);
+      }
+      /* Summary */
+      .summary-text {
+        font-size: 15px;
+        line-height: 1.85;
+        color: var(--ink2);
+        font-weight: 300;
+        margin-bottom: 48px;
+      }
+      .summary-text em {
+        font-style: normal;
+        color: var(--ink);
+        font-weight: 500;
+      }
+      /* Skills */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-bottom: 52px;
+      }
+      .skill-card {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 20px;
+        transition: all 0.2s;
+      }
+      .skill-card:hover {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--accent-light);
+        transform: translateY(-1px);
+      }
+      .skill-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: var(--accent-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+      .skill-title {
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 6px;
+        line-height: 1.4;
+      }
+      .skill-desc {
+        font-size: 11.5px;
+        color: var(--muted);
+        font-weight: 300;
+        line-height: 1.6;
+      }
+      /* ─── CAREER (inside About) ─── */
+      .career-section {
+        margin-bottom: 0;
+      }
+      .exp-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .exp-item {
+        display: grid;
+        grid-template-columns: 170px 1fr;
+        gap: 0 28px;
+        padding: 28px 0;
+        border-bottom: 1px solid var(--line);
+        transition: background 0.15s;
+        border-radius: 0;
+      }
+      .exp-item:first-child {
+        padding-top: 0;
+      }
+      .exp-item:last-child {
+        border-bottom: none;
+      }
+      .exp-left {
+      }
+      .exp-co {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 3px;
+      }
+      .exp-period {
+        font-size: 11px;
+        color: var(--accent);
+        font-weight: 500;
+        margin-bottom: 2px;
+      }
+      .exp-type {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .exp-right {
+      }
+      .exp-role {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 3px;
+      }
+      .exp-product {
+        font-size: 11.5px;
+        color: var(--muted);
+        margin-bottom: 12px;
+        font-style: italic;
+      }
+      .bullets {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .bullets li {
+        display: flex;
+        gap: 8px;
+        font-size: 12.5px;
+        color: var(--ink2);
+        font-weight: 300;
+        line-height: 1.65;
+      }
+      .bullets li::before {
+        content: "→";
+        color: var(--accent);
+        font-size: 11px;
+        flex-shrink: 0;
+        margin-top: 3px;
+        line-height: 1.65;
+      }
+      .lawsuit-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 8px;
+      }
+      .lawsuit-col {
+        background: var(--bg2);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 14px;
+      }
+      .lawsuit-col-title {
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+      .lawsuit-col ul {
+        list-style: none;
+      }
+      .lawsuit-col ul li {
+        font-size: 11.5px;
+        color: var(--ink2);
+        font-weight: 300;
+        line-height: 1.65;
+        padding: 2px 0 2px 12px;
+        position: relative;
+      }
+      .lawsuit-col ul li::before {
+        content: "–";
+        position: absolute;
+        left: 0;
+        color: var(--muted);
+      }
+      /* ─── SIDEBAR (right col in about) ─── */
+      .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+      }
+      .side-card {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 22px;
+      }
+      .side-card-title {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 14px;
+      }
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .tag {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        background: var(--tag-bg);
+        color: var(--ink2);
+        font-weight: 400;
+        transition: all 0.15s;
+      }
+      .tag:hover {
+        background: var(--accent-light);
+        color: var(--accent);
+      }
+      .cert-list {
+        list-style: none;
+      }
+      .cert-list li {
+        font-size: 12.5px;
+        color: var(--ink2);
+        padding: 5px 0;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .cert-list li:last-child {
+        border-bottom: none;
+      }
+      .cert-list li::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--accent);
+        flex-shrink: 0;
+        opacity: 0.6;
+      }
+      .expertise-item {
+        margin-bottom: 16px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--line);
+      }
+      .expertise-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+      .expertise-title {
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 5px;
+      }
+      .expertise-desc {
+        font-size: 11.5px;
+        color: var(--muted);
+        font-weight: 300;
+        line-height: 1.6;
+      }
+      /* ─── PROJECTS PANEL ─── */
+      .projects-wrap {
+        padding: 48px 24px;
+        max-width: 1180px;
+        margin: 0 auto;
+      }
+      .projects-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .project-card {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 26px 28px;
+        transition: all 0.22s;
+        position: relative;
+        overflow: hidden;
+      }
+      .project-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--accent), #3b82f6);
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      .project-card:hover {
+        border-color: rgba(15, 95, 216, 0.15);
+        box-shadow: 0 4px 20px rgba(15, 95, 216, 0.05);
+        transform: translateY(-2px);
+      }
+      .project-card:hover::before {
+        opacity: 1;
+      }
+      .project-num {
+        font-family: "DM Serif Display", serif;
+        font-size: 42px;
+        color: var(--line);
+        line-height: 1;
+        margin-bottom: 12px;
+        transition: color 0.2s;
+      }
+      .project-card:hover .project-num {
+        color: #bfdbfe;
+      }
+      .project-title {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--ink);
+        line-height: 1.4;
+        margin-bottom: 6px;
+      }
+      .project-goal-label {
+        font-size: 9.5px;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 3px;
+      }
+      .project-goal {
+        font-size: 11.5px;
+        color: var(--muted);
+        font-weight: 300;
+        line-height: 1.55;
+        margin-bottom: 14px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--line);
+      }
+      .project-body {
+        font-size: 12px;
+        color: var(--ink2);
+        font-weight: 300;
+        line-height: 1.7;
+      }
+      .project-body ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .project-body ul li {
+        display: flex;
+        gap: 8px;
+      }
+      .project-body ul li::before {
+        content: "→";
+        color: var(--accent);
+        flex-shrink: 0;
+        font-size: 11px;
+        margin-top: 2px;
+      }
+      /* ─── FOOTER ─── */
+      footer {
+        background: var(--white);
+        border-top: 1px solid var(--line);
+        padding: 18px 24px;
+        margin-top: 60px;
+      }
+      .footer-inner {
+        max-width: 1180px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .footer-inner span {
+        font-size: 11.5px;
+        color: var(--muted);
+      }
+      /* ─── CAREER CARDS ─── */
+      .career-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .co-card {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: box-shadow 0.2s;
+      }
+      .co-card:hover {
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      }
+      .co-card-sm {
+        flex: 1;
+      }
+      .co-card-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .co-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        gap: 12px;
+      }
+      .co-card-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .co-badge {
+        width: 38px;
+        height: 38px;
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 700;
+        flex-shrink: 0;
+        letter-spacing: 0.03em;
+      }
+      .co-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--ink);
+        line-height: 1.2;
+      }
+      .co-period {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      .co-card-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-shrink: 0;
+      }
+      .co-role-chip {
+        font-size: 11.5px;
+        font-weight: 500;
+        color: var(--accent);
+        background: var(--accent-light);
+        padding: 4px 10px;
+        border-radius: 20px;
+      }
+      .co-card-body {
+        padding: 0 20px 20px;
+      }
+      .co-role-title {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 4px;
+        margin-top: 2px;
+      }
+      .co-product-tag {
+        font-size: 11.5px;
+        color: var(--muted);
+        font-style: italic;
+        margin-bottom: 12px;
+      }
+      .role-block-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 6px;
+      }
+      .role-label {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: var(--accent-light);
+        padding: 2px 8px;
+        border-radius: 4px;
+      }
+      .role-period-small {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      /* ─── RESPONSIVE ─── */
+      @media (max-width: 900px) {
+        .about-layout {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+        .hero-inner {
+          grid-template-columns: 1fr;
+        }
+        .hero-meta {
+          text-align: left;
+        }
+        .metrics {
+          max-width: 100%;
+        }
+        .skills-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+        .exp-item {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
+        .lawsuit-grid {
+          grid-template-columns: 1fr;
+        }
+        .co-card-row {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 560px) {
+        .skills-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-name {
+          font-size: 38px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ─── STICKY NAV ─── -->
+    <header>
+      <div class="header-inner">
+        <div class="logo">이사라 <span>Sarah</span></div>
+        <nav>
+          <button class="nav-btn active" onclick="showPanel('about', this)">
+            About
+          </button>
+          <button class="nav-btn" onclick="showPanel('projects', this)">
+            Projects
+          </button>
+        </nav>
+      </div>
+    </header>
+    <!-- ─── HERO ─── -->
+    <div class="hero">
+      <div class="hero-top">
+        <!-- Left -->
+        <div>
+          <div class="hero-eyebrow">Healthcare AI Product Manager</div>
+          <div class="hero-name">이사라</div>
+          <div class="hero-name-en">Sarah Lee</div>
+          <div class="hero-journey">
+            <span class="journey-label">Career Path</span>
+            <span class="journey-pill">Asan Medical Center RN</span>
+            <span class="journey-arrow">›</span>
+            <span class="journey-pill">Medical Litigation Analysis</span>
+            <span class="journey-arrow">›</span>
+            <span class="journey-pill">Public R&D Database</span>
+            <span class="journey-arrow">›</span>
+            <span class="journey-pill">EMR SaaS</span>
+            <span class="journey-arrow">›</span>
+            <span class="journey-pill">AI Medical Device PM</span>
+            <span class="journey-arrow">›</span>
+            <span class="journey-pill current">Gen AI PM ✦</span>
+          </div>
+        </div>
+        <!-- Right -->
+        <div class="hero-right">
+          <div class="hero-stat-grid">
+            <div class="m-cell">
+              <span class="m-num">10+</span>
+              <div class="m-label">Years in Healthcare</div>
+            </div>
+            <div class="m-cell">
+              <span class="m-num">3</span>
+              <div class="m-label">AI Products Launched</div>
+            </div>
+            <div class="m-cell">
+              <span class="m-num">7</span>
+              <div class="m-label">Key Projects</div>
+            </div>
+          </div>
+          <div class="hero-contact">
+            <div class="contact-item">
+              <div class="contact-icon">✉</div>
+              <a href="mailto:sarah_4029@outlook.com">sarah_4029@outlook.com</a>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">📱</div>
+              010-2920-2002
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Domains strip -->
+      <div class="hero-domains"></div>
+    </div>
+    <!-- ─── PANELS ─── -->
+    <!-- ABOUT + CAREER -->
+    <div class="panel active" id="panel-about">
+      <div class="about-layout">
+        <div>
+          <!-- Summary -->
+          <div class="section-label">About</div>
+          <p class="summary-text">
+            Clinical nursing background rooted in patient-centered thinking has
+            evolved through medical litigation analysis, public healthcare R&D
+            database development, EMR SaaS planning, and AI medical device
+            product strategy. Currently directing
+            <em>Generative AI healthcare services powered by LLM</em> as
+            <em
+              >Product Strategy, Clinical Validity, SaMD Regulatory Response,
+              and Business Execution</em
+            >
+            in integrated design and operations.
+          </p>
+          <!-- Core Skills -->
+          <div class="section-label">Core Expertise</div>
+          <div class="skills-grid" style="margin-bottom: 52px">
+            <div class="skill-card">
+              <div class="skill-icon">⚕</div>
+              <div class="skill-title">
+                Evidence-Based Strategic Communication
+              </div>
+              <div class="skill-desc">
+                Leading expert-level discussions with healthcare professionals,
+                researchers, and stakeholders based on latest clinical data,
+                optimizing messaging for each audience.
+              </div>
+            </div>
+            <div class="skill-card">
+              <div class="skill-icon">📊</div>
+              <div class="skill-title">
+                Medical Information Strategic Analysis
+              </div>
+              <div class="skill-desc">
+                Deriving market insights through KOL engagement, academic
+                conferences, and competitive monitoring, directly connecting to
+                product strategy and partnership development.
+              </div>
+            </div>
+            <div class="skill-card">
+              <div class="skill-icon">🔬</div>
+              <div class="skill-title">
+                Learning Agility & Medical Trend Internalization
+              </div>
+              <div class="skill-desc">
+                Continuously internalizing medical trends through international
+                conferences, latest journals, and expert networks, disseminating
+                evidence-based information across the organization.
+              </div>
+            </div>
+          </div>
+          <!-- Career -->
+          <div class="section-label">Career</div>
+          <div class="career-cards">
+            <!-- AITRICS -->
+            <div class="co-card">
+              <div class="co-card-header">
+                <div class="co-card-left">
+                  <div
+                    class="co-badge"
+                    style="background: #eff6ff; color: #0f5fd8"
+                  >
+                    AI
+                  </div>
+                  <div>
+                    <div class="co-name">AITRICS</div>
+                    <div class="co-period">2022 – Present</div>
+                  </div>
+                </div>
+                <div class="co-card-right">
+                  <div class="co-role-chip">Generative AI PM</div>
+                </div>
+              </div>
+              <div class="co-card-body">
+                <div class="co-role-title">
+                  Healthcare AI Copilot Product & Business Strategy, National
+                  Research Project PM
+                </div>
+                <ul class="bullets">
+                  <li>
+                    V.Doc Pro (LLM AI Copilot for healthcare professionals),
+                    V.Doc (conversational healthcare AI app for general users) —
+                    full product design, Clinical QA, official launch
+                  </li>
+                  <li>
+                    Establishing evidence-based medical validity and clinical
+                    efficacy verification system for generative AI-powered
+                    clinical support solutions
+                  </li>
+                  <li>
+                    Dr.Answer 3.0 national research project execution and
+                    overall management (milestone tracking, government
+                    reporting, consortium stakeholder alignment)
+                  </li>
+                  <li>
+                    Integrated risk management through external collaborations
+                    in clinical, regulatory, and intellectual property domains
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- 뉴로핏 (두 역할) -->
+            <div class="co-card">
+              <div class="co-card-header">
+                <div class="co-card-left">
+                  <div
+                    class="co-badge"
+                    style="background: #f0fdf4; color: #16a34a"
+                  >
+                    PM
+                  </div>
+                  <div>
+                    <div class="co-name">Neurofit</div>
+                    <div class="co-period">2019 – 2022</div>
+                  </div>
+                </div>
+                <div class="co-card-right">
+                  <div class="co-role-chip">AI SaMD Product / Marketing PM</div>
+                </div>
+              </div>
+              <div class="co-card-body">
+                <!-- Role 1 -->
+                <div class="role-block">
+                  <div class="role-block-header">
+                    <span class="role-label">Product Manager</span>
+                  </div>
+                  <div class="co-role-title">
+                    AI Nuclear Medicine Image Analysis Software Planning &
+                    Launch
+                  </div>
+                  <div class="co-product-tag">
+                    SCALE PET — FDA Class II Certified Medical Device
+                  </div>
+                  <ul class="bullets">
+                    <li>
+                      Amyloid, Tau, FP-CIT, FDG PET image analysis software
+                      planning and Neurophet SCALE PET product launch
+                    </li>
+                    <li>
+                      Multi-modal product launch operations — pre-launch QA,
+                      technical documentation, user training under unified
+                      quality standards
+                    </li>
+                    <li>
+                      IEC 62366-1 based usability evaluation — systematic hazard
+                      analysis, formative evaluation, and summative assessment
+                    </li>
+                  </ul>
+                </div>
+                <!-- Role 2 -->
+                <div
+                  class="role-block"
+                  style="
+                    margin-top: 22px;
+                    padding-top: 22px;
+                    border-top: 1px solid var(--line);
+                  "
+                >
+                  <div class="role-block-header">
+                    <span class="role-label">Marketing PM</span>
+                  </div>
+                  <div class="co-role-title">
+                    AI Cerebrovascular Disease Analysis Product Line GTM
+                    Strategy
+                  </div>
+                  <div class="co-product-tag">
+                    Aneurysm / CMB / CTP Solutions
+                  </div>
+                  <ul class="bullets">
+                    <li>
+                      Simultaneous positioning strategy and differentiated
+                      messaging architecture for three product lines based on
+                      market and competitive analysis
+                    </li>
+                    <li>
+                      Strategic MOU with SK C&C — co-marketing execution and
+                      sales network expansion
+                    </li>
+                    <li>
+                      Advisory Board operations and KOL engagement driving
+                      reference site acquisition and sales cycle reduction
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- 더존비즈온 -->
+            <div class="co-card">
+              <div class="co-card-header">
+                <div class="co-card-left">
+                  <div
+                    class="co-badge"
+                    style="background: #fffbeb; color: #d97706"
+                  >
+                    IT
+                  </div>
+                  <div>
+                    <div class="co-name">Douzone Bizon</div>
+                    <div class="co-period">2017 – 2019</div>
+                  </div>
+                </div>
+                <div class="co-card-right">
+                  <div class="co-role-chip">Service Planner/Consultant</div>
+                </div>
+              </div>
+              <div class="co-card-body">
+                <div class="co-role-title">
+                  Clinic-Level EMR SaaS Clinical Module Planning
+                </div>
+                <div class="co-product-tag">
+                  Wehago-H · Cloud-Based Clinic EMR
+                </div>
+                <ul class="bullets">
+                  <li>
+                    Clinical workflow IA/UI design and external system
+                    integration planning (KIMS, NIMS, etc.)
+                  </li>
+                  <li>
+                    Unit and field testing execution, requirement collection and
+                    delivery for launch quality assurance
+                  </li>
+                  <li>
+                    Clinical context-based product training design for
+                    non-clinical staff to enhance organizational domain
+                    understanding
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- 법무법인 세승 -->
+            <div class="co-card">
+              <div class="co-card-header">
+                <div class="co-card-left">
+                  <div
+                    class="co-badge"
+                    style="background: #fdf2f8; color: #9333ea"
+                  >
+                    Legal
+                  </div>
+                  <div>
+                    <div class="co-name">Law Firm Seseung</div>
+                    <div class="co-period">2015 – 2017</div>
+                  </div>
+                </div>
+                <div class="co-card-right">
+                  <div class="co-role-chip">Medical Consultant</div>
+                </div>
+              </div>
+              <div class="co-card-body">
+                <div class="co-role-title">
+                  Medical Litigation Clinical Analysis & Expert Opinion
+                </div>
+                <div class="lawsuit-grid" style="margin-top: 12px">
+                  <div class="lawsuit-col">
+                    <div class="lawsuit-col-title">Pre-Litigation</div>
+                    <ul>
+                      <li>
+                        Malpractice determination and damages assessment
+                        opinions
+                      </li>
+                      <li>
+                        Medical Dispute Resolution & Consumer Protection
+                        Authority responses
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="lawsuit-col">
+                    <div class="lawsuit-col-title">Post-Litigation</div>
+                    <ul>
+                      <li>
+                        Court submissions (complaint, response, preparatory
+                        documents)
+                      </li>
+                      <li>Litigation coordination with major hospitals</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 방사선보건원 + 서울아산병원 (작은 카드 2개) -->
+            <div class="co-card-row">
+              <div class="co-card co-card-sm">
+                <div class="co-card-header">
+                  <div class="co-card-left">
+                    <div
+                      class="co-badge"
+                      style="background: #f0f9ff; color: #0284c7"
+                    >
+                      Public
+                    </div>
+                    <div>
+                      <div class="co-name">Radiation Health Institute</div>
+                      <div class="co-period">2016 – 2017</div>
+                    </div>
+                  </div>
+                  <div class="co-card-right">
+                    <div class="co-role-chip">Public R&D</div>
+                  </div>
+                </div>
+                <div class="co-card-body">
+                  <div class="co-role-title">
+                    Public Healthcare Research Database Development
+                  </div>
+                  <ul class="bullets" style="margin-top: 10px">
+                    <li>
+                      Radiation-related healthcare data collection, refinement,
+                      and public research database contribution
+                    </li>
+                    <li>
+                      Clinical data collection, classification, validation
+                      process experience — foundational basis for Clinical
+                      Evidence design capabilities
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="co-card co-card-sm">
+                <div class="co-card-header">
+                  <div class="co-card-left">
+                    <div
+                      class="co-badge"
+                      style="background: #fff1f2; color: #e11d48"
+                    >
+                      RN
+                    </div>
+                    <div>
+                      <div class="co-name">Asan Medical Center</div>
+                      <div class="co-period">2013 – 2015</div>
+                    </div>
+                  </div>
+                  <div class="co-card-right">
+                    <div class="co-role-chip">Neurosurgery RN</div>
+                  </div>
+                </div>
+                <div class="co-card-body">
+                  <div class="co-role-title">
+                    Neurosurgery Ward Clinical Nursing
+                  </div>
+                  <div class="co-product-tag">
+                    Cerebrovascular · Brain Tumor · Spine Sections
+                  </div>
+                  <ul class="bullets">
+                    <li>
+                      Severity management and multidisciplinary collaboration in
+                      high-acuity clinical settings — cultivated clinical
+                      intuition for medical AI product planning
+                    </li>
+                    <li>
+                      PI/QI activities and health insurance data support —
+                      foundational knowledge of healthcare quality management
+                      structure and data governance
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+          <div class="side-card">
+            <div class="side-card-title">Core Competencies</div>
+            <div class="tags">
+              <span class="tag">Generative AI · LLM</span>
+              <span class="tag">Clinical Evidence</span>
+              <span class="tag">Medical QA</span>
+              <span class="tag">Regulatory Strategy</span>
+              <span class="tag">IEC 62366-1</span>
+              <span class="tag">Prompt Governance</span>
+              <span class="tag">Agentic AI-Ops</span>
+              <span class="tag">GTM Strategy</span>
+              <span class="tag">KOL Engagement</span>
+              <span class="tag">EMR SaaS</span>
+              <span class="tag">DICOM / PET</span>
+              <span class="tag">National R&D Project</span>
+              <span class="tag">Medical Litigation Analysis</span>
+              <span class="tag">Co-Marketing</span>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-card-title">Education</div>
+            <div
+              style="
+                font-size: 13px;
+                color: var(--ink);
+                font-weight: 600;
+                margin-bottom: 3px;
+              "
+            >
+              Bachelor of Nursing
+            </div>
+            <div style="font-size: 12px; color: var(--muted)">2009 – 2013</div>
+          </div>
+          <div class="side-card">
+            <div class="side-card-title">License & Certificate</div>
+            <ul class="cert-list">
+              <li>Registered Nurse License</li>
+              <li>CPCR / BLS</li>
+              <li>MOS MASTER</li>
+              <li>Computer Proficiency</li>
+            </ul>
+          </div>
+          <div class="side-card">
+            <div class="side-card-title">Expertise Profile</div>
+            <div class="expertise-item">
+              <div class="expertise-title">
+                Evidence-Based Strategic Communication
+              </div>
+              <div class="expertise-desc">
+                Leading expert discussions with healthcare professionals,
+                researchers, and stakeholders using latest clinical data,
+                optimizing messaging impact for each audience
+              </div>
+            </div>
+            <div class="expertise-item">
+              <div class="expertise-title">
+                Medical Information Strategic Analysis
+              </div>
+              <div class="expertise-desc">
+                Deriving market insights through KOL engagement, academic
+                conferences, competitive monitoring, converting to product
+                strategy and business outcomes
+              </div>
+            </div>
+            <div class="expertise-item">
+              <div class="expertise-title">
+                Learning Agility & Medical Trend Internalization
+              </div>
+              <div class="expertise-desc">
+                Continuously internalizing medical trends through international
+                conferences, latest journals, expert networks, and disseminating
+                evidence-based information across organizations
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <!-- PROJECTS -->
+    <div class="panel" id="panel-projects">
+      <div class="projects-wrap">
+        <div class="section-label">Key Projects</div>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-num">01</div>
+            <div class="project-title">
+              Planning & Creating Marketing Materials
+            </div>
+            <div class="project-goal-label">Goal</div>
+            <div class="project-goal">
+              Effective healthcare professional product promotion and clinical
+              credibility building
+            </div>
+            <div class="project-body">
+              <ul>
+                <li>
+                  Neurophet AQUA clinical case collection planning and
+                  production — science-based content building trust in clinical
+                  settings
+                </li>
+                <li>
+                  KIMES 2024 Academic Conference E-brochure & E-guestbook
+                  planning — maximizing digital academic promotion efficiency
+                </li>
+                <li>
+                  RSNA promotional video content planning and production —
+                  expanding global clinical community brand awareness
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-num">02</div>
+            <div class="project-title">
+              Build & Management of KOLs: Medical Advisory
+            </div>
+            <div class="project-goal-label">Goal</div>
+            <div class="project-goal">
+              Identifying clinical unmet needs and building relationships with
+              key opinion leaders
+            </div>
+            <div class="project-body">
+              <ul>
+                <li>
+                  Selecting advisors and structuring consultation for clinical
+                  utility assessment of AI cerebrovascular disease solutions
+                </li>
+                <li>
+                  Full-cycle management from meeting facilitation through
+                  documentation to research proposals — converting KOL
+                  engagement to clinical evidence enhancement
+                </li>
+                <li>
+                  Advisory Board Meeting planning and presentation materials
+                  supporting reference site acquisition
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-num">03</div>
+            <div class="project-title">
+              AI Medical Software SCALE PET: Product Planning & Launch
+            </div>
+            <div class="project-goal-label">Goal</div>
+            <div class="project-goal">
+              Neurodegenerative disease diagnostic support software launch and
+              refinement with regulatory certification
+            </div>
+            <div class="project-body">
+              <ul>
+                <li>
+                  On-premise AI diagnostic support software SCALE PET planning —
+                  reverse-engineering biomarker quantification features from
+                  clinical requirements
+                </li>
+                <li>
+                  Specialized convenience features for nuclear medicine
+                  professionals improving clinical workflow efficiency
+                </li>
+                <li>
+                  Digital Healthcare Medical Device Pilot Supply Program
+                  selection for four hospitals
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-num">04</div>
+            <div class="project-title">
+              Internal / External Communication Activity
+            </div>
+            <div class="project-goal-label">Goal</div>
+            <div class="project-goal">
+              Enhancing organizational and external understanding of AI-based
+              brain imaging analysis solutions
+            </div>
+            <div class="project-body">
+              <ul>
+                <li>
+                  Healthcare Device Demonstration Support Program strategic
+                  workshop participation and presentation — building strategic
+                  trust with external stakeholders
+                </li>
+                <li>
+                  Healthcare professional product briefings reducing adoption
+                  barriers and improving implementation conversion
+                </li>
+                <li>
+                  Non-clinical staff clinical education sessions enhancing
+                  organizational communication quality
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-num">05</div>
+            <div class="project-title">
+              Marketing Activity for Academic Events and Symposia
+            </div>
+            <div class="project-goal-label">Goal</div>
+            <div class="project-goal">
+              Communicating scientific value and clinical utility of product
+              lineup through academic channels
+            </div>
+            <div class="project-body">
+              <ul>
+                <li>
+                  Hosting domestic symposium on Alzheimer's therapeutics —
+                  strengthening brand science through KOL speaker invitations
+                </li>
+                <li>
+                  Developing exhibition video materials for RSNA visualizing
+                  global brand scientific credibility
+                </li>
+                <li>
+                  Rapid response to presentation material requests strengthening
+                  academic cooperation networks with external speakers
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-num">06</div>
+            <div class="project-title">
+              Education and Knowledge Transfer Initiative
+            </div>
+            <div class="project-goal-label">Goal</div>
+            <div class="project-goal">
+              Internal medical information dissemination and evidence-based
+              information system establishment
+            </div>
+            <div class="project-body">
+              <ul>
+                <li>
+                  Creating product and disease education materials for employees
+                  with knowledge transfer sessions
+                </li>
+                <li>
+                  Reviewing academic and promotional materials ensuring clinical
+                  accuracy of evidence-based external communications
+                </li>
+                <li>
+                  Establishing regular update system reflecting latest clinical
+                  data and guidelines
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-card" style="grid-column: 1/-1">
+            <div class="project-num">07</div>
+            <div class="project-title">
+              Strategic Partnership & Co-Marketing with Major IT Company
+            </div>
+            <div class="project-goal-label">Goal</div>
+            <div class="project-goal">
+              Strengthening market position of brain disease AI solutions and
+              expanding KOL network
+            </div>
+            <div class="project-body">
+              <ul>
+                <li>
+                  Leading strategic MOU with SK C&C — market penetration
+                  strategy leveraging major IT company networks and co-marketing
+                  execution at major conferences and symposiums
+                </li>
+                <li>
+                  Strengthening scientific evidence through collaborative
+                  research and clinical trials — delivering objective clinical
+                  performance verification (AUC 0.982, sensitivity 97.2%,
+                  specificity 96.9%)
+                </li>
+                <li>
+                  Leveraging partner's extensive healthcare institution network
+                  to rapidly expand clinical expert and KOL touchpoints,
+                  structurally enhancing sales and marketing efficiency
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-inner">
+        <span>Sarah Lee · Healthcare AI Product Manager</span>
+        <span>sarah_4029@outlook.com · 010-2920-2002</span>
+      </div>
+    </footer>
+    <script>
+      function showPanel(name, tab) {
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-btn")
+          .forEach((t) => t.classList.remove("active"));
+        document.getElementById("panel-" + name).classList.add("active");
+        tab.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  </body>
+</html>
